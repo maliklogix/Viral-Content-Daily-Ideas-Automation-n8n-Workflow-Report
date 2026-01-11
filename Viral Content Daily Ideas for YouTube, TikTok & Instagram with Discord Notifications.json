@@ -1,0 +1,1059 @@
+{
+  "name": "Viral Content Daily Ideas of Youtube, Tittok, Instagram with Discord Notification and Integration with discord",
+  "nodes": [
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"part_1\": \"Main purpose and trigger explanation\",\n  \"part_2\": \"Detailed step-by-step breakdown of each node\",\n  \"part_3\": \"Outputs, dependencies, and integration tips\",\n  \"file_link\": \"link here\"\n}"
+      },
+      "id": "e48e2d44-392d-4e31-8383-1324f4967aba",
+      "name": "Structured Output Parser1",
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "position": [
+        -168,
+        652
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.data }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "You are TrendSage, a Discord bot that analyzes social trend data (e.g., from TikTok, TrendHunter, Exploding Topics) and generates **detailed, high-impact video ideas** for content creators.\n\nYour task:\n- Generate **compelling video ideas** with **engaging hooks** and **key points**\n- Format output into **3 parts**, with each part staying under **1500 characters**\n- Focus on **video content** that is trendy, viral, and audience-captivating\n- Ensure that each video idea is **optimized for short-form platforms** like TikTok, Instagram Reels, and YouTube Shorts\n\nOutput should look like:\n\n```json\n{\n  \"part_1\": \"Detailed video ideas and hooks\",\n  \"part_2\": \"Continuation of video ideas, including key points\",\n  \"part_3\": \"Final video ideas with strong CTA and insights\"\n}\n✅ Video Idea Structure (For Each Trend):\n🔥 {Trend Title}\n🌐 Platform: TikTok / IG Reels / YouTube Shorts\n📊 Trend Type: {Viral sound, challenge, POV, or niche trend}\n📈 Trend Stats: {e.g., “5.2M posts in 24h”, “Growing in 3+ countries”}\n🧠 Hook Idea: {The hook that grabs attention in the first 3 seconds}\n💡 Key Point #1: {Why this is trending and why your audience cares}\n💥 Key Point #2: {Engaging visual or challenge idea}\n🎯 Call to Action (CTA): {What you want your audience to do – e.g., “Duet this video!”}\n\n✅ Example:\npart_1:\n\njson\nCopy\nEdit\n{\n  \"part_1\": \"🔥 [Soundbite Magic Trend](https://tiktok.com/xyz)\\n🌐 **Platform**: TikTok\\n📊 **Trend Type**: Viral Sound\\n📈 **Stats**: 5M uses in the last 24 hours\\n🧠 **Hook Idea**: *“Start your video with a dramatic zoom-in and slow-mo effect as the sound hits”*\\n💡 **Key Point #1**: *This sound creates tension and excitement. Perfect for a 'before & after' transformation video* \\n💥 **Key Point #2**: *Use bold captions with an engaging twist to create curiosity* \\n🎯 **Call to Action**: *“Try this sound with your own transformation!”*\\n**━━━━━━━━━━━━**\"\n}\npart_2:\n\njson\nCopy\nEdit\n{\n  \"part_2\": \"🔥 [POV Reactions Challenge](https://tiktok.com/xyz)\\n🌐 **Platform**: TikTok\\n📊 **Trend Type**: POV Challenge\\n📈 **Stats**: 2M+ reactions, trending this week\\n🧠 **Hook Idea**: *“What happens when you walk into the room and unexpectedly see your dream job?”*\\n💡 **Key Point #1**: *Use exaggerated reactions for comic effect. The unexpected twist keeps viewers hooked* \\n💥 **Key Point #2**: *Pair with a trending sound or meme format for relatability* \\n🎯 **Call to Action**: *“Duet with your reaction to this POV!”*\\n**━━━━━━━━━━━━**\"\n}\npart_3:\n\njson\nCopy\nEdit\n{\n  \"part_3\": \"🔥 [DIY Lifehack Trend](https://tiktok.com/xyz)\\n🌐 **Platform**: YouTube Shorts\\n📊 **Trend Type**: DIY Lifehack\\n📈 **Stats**: 8.7M views in 48 hours\\n🧠 **Hook Idea**: *“Here's a 30-second lifehack that will change the way you organize your home”*\\n💡 **Key Point #1**: *Keep it simple, yet surprising—show an effective hack for everyday problems* \\n💥 **Key Point #2**: *Add a touch of humor to keep the audience engaged and shareable* \\n🎯 **Call to Action**: *“Tag someone who needs this hack!”*\\n**━━━━━━━━━━━━**\"\n}\n✅ Output Rules:\nPart 1: First 3 video ideas with hooks, key points, and CTA\n\nPart 2: Continuation with the next 3 ideas, if needed\n\nPart 3: Final 3 ideas, along with strong CTA and insights\n\nEach part must be under 1500 characters and fit within Discord’s message limit\n\n"
+        }
+      },
+      "id": "1e7c234c-d589-4943-8d05-85d9a5367351",
+      "name": "AI Agent2",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        -304,
+        428
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "id": "d96ad0d1-cd41-47d3-9686-38ce43f78950",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "position": [
+        -296,
+        652
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1450043776084086877",
+          "mode": "list",
+          "cachedResultName": "Muhammad Farooq's server",
+          "cachedResultUrl": "https://discord.com/channels/1450043776084086877"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1459119344528392287",
+          "mode": "list",
+          "cachedResultName": "viral-content-ideas",
+          "cachedResultUrl": "https://discord.com/channels/1450043776084086877/1459119344528392287"
+        },
+        "content": "={{ $('AI Agent2').item.json.output.part_1 }}",
+        "options": {}
+      },
+      "id": "31be890b-63c5-42d9-9dca-f47feecb19bd",
+      "name": "Discord6",
+      "type": "n8n-nodes-base.discord",
+      "position": [
+        48,
+        428
+      ],
+      "webhookId": "62f23d5c-2e86-4338-bb07-31e4dbd834dc",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "url": "https://www.social-searcher.com/social-trends/?q7=ai",
+        "options": {}
+      },
+      "id": "6900a537-4e71-4c5e-abf1-98b0beb87433",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        -752,
+        428
+      ],
+      "typeVersion": 4.2
+    },
+    {
+      "parameters": {
+        "html": "={{ $json.data }}",
+        "options": {}
+      },
+      "id": "576139fe-be58-4889-b472-0e3d33c6ca49",
+      "name": "Markdown",
+      "type": "n8n-nodes-base.markdown",
+      "position": [
+        -528,
+        428
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1450043776084086877",
+          "mode": "list",
+          "cachedResultName": "Muhammad Farooq's server",
+          "cachedResultUrl": "https://discord.com/channels/1450043776084086877"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1459119344528392287",
+          "mode": "list",
+          "cachedResultName": "viral-content-ideas",
+          "cachedResultUrl": "https://discord.com/channels/1450043776084086877/1459119344528392287"
+        },
+        "content": "={{ $('AI Agent2').item.json.output.part_2 }}",
+        "options": {}
+      },
+      "id": "ac2cb633-9f28-4922-a584-69eb0caec505",
+      "name": "Discord",
+      "type": "n8n-nodes-base.discord",
+      "position": [
+        272,
+        428
+      ],
+      "webhookId": "37a24144-908f-4ccb-843b-320202d8b0c5",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "resource": "message",
+        "guildId": {
+          "__rl": true,
+          "value": "1450043776084086877",
+          "mode": "list",
+          "cachedResultName": "Muhammad Farooq's server",
+          "cachedResultUrl": "https://discord.com/channels/1450043776084086877"
+        },
+        "channelId": {
+          "__rl": true,
+          "value": "1459119344528392287",
+          "mode": "list",
+          "cachedResultName": "viral-content-ideas",
+          "cachedResultUrl": "https://discord.com/channels/1450043776084086877/1459119344528392287"
+        },
+        "content": "={{ $('AI Agent2').item.json.output.part_3 }}",
+        "options": {}
+      },
+      "id": "57e0eafe-3175-44b5-ae32-4d08a0b7021b",
+      "name": "Discord1",
+      "type": "n8n-nodes-base.discord",
+      "position": [
+        496,
+        428
+      ],
+      "webhookId": "437aa562-f1a7-4893-9359-73f0351b6bfa",
+      "typeVersion": 2
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "id": "a72bf9e2-01ba-43f9-b50d-c7edf214267e",
+      "name": "When Executed by Another Workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        -976,
+        428
+      ],
+      "typeVersion": 1.1
+    },
+    {
+      "parameters": {
+        "content": "## Workflow Overview\n\nThis workflow is designed to automatically generate and post short-form video ideas to a Discord channel based on current social media trends.  It fetches trend data, processes it using an AI, and then sends the results in parts to a specified Discord channel.",
+        "height": 600,
+        "width": 500,
+        "color": 0
+      },
+      "id": "f5a6dda0-6981-4193-b0d1-9a0fbdbdbcce",
+      "name": "Workflow Summary",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Note 1: Note 1: This node acts as a trigger, initiating the workflow when another workflow executes it.  This allows external control over when the trend analysis begins.",
+        "height": 500,
+        "width": 400
+      },
+      "id": "3873387e-5dfe-458e-b927-2dee749bea1e",
+      "name": "Setup Note 1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -904,
+        88
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Note 2: Note 2: An HTTP Request node fetches social media trend data from a specified URL. The URL points to a website providing trend information (in this case, social-searcher.com).  Multiple schedule triggers are present to run this process at different times of the day.",
+        "height": 500,
+        "width": 400,
+        "color": 2
+      },
+      "id": "51129e63-acc8-4d20-a51a-c899944bba52",
+      "name": "Setup Note 2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -680,
+        88
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Note 3: Note 3: An AI Agent node processes the retrieved trend data.  It uses a specified Large Language Model (OpenAI) and prompt to generate video ideas tailored for short-form video platforms. The output is structured into three parts for easier posting.",
+        "height": 500,
+        "width": 400,
+        "color": 3
+      },
+      "id": "040072c2-0172-4761-8b5e-61d77bf385ee",
+      "name": "Setup Note 3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -392,
+        88
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Note 4: Note 4: Three Discord nodes post the three parts of the AI's output (video ideas) to a specific Discord channel. Each node sends one part of the structured response from the AI agent.",
+        "height": 500,
+        "width": 400,
+        "color": 4
+      },
+      "id": "3f09c5dd-28e5-49ef-b080-7c02f3d5137e",
+      "name": "Setup Note 4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        8,
+        88
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Note 5: Note 5: An OpenAI Chat Model node acts as the language model for the AI Agent.  It's configured to use a specific OpenAI model ('gpt-4o-mini'), requiring an appropriate OpenAI API key to function.",
+        "height": 500,
+        "width": 400,
+        "color": 5
+      },
+      "id": "0fd45eab-7b05-42b1-81c2-9debf8ef4fc9",
+      "name": "Setup Note 5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        632,
+        -164
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4",
+          "mode": "list",
+          "cachedResultName": "SocialMediaAutomation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1540155789,
+          "mode": "list",
+          "cachedResultName": "Youtube",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4/edit#gid=1540155789"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Creation Date": "={{ $('Discord1').item.json.timestamp }}",
+            "Content Summary": "={{ $('Discord1').item.json.content }}"
+          },
+          "matchingColumns": [
+            "Creation Date"
+          ],
+          "schema": [
+            {
+              "id": "Creation Date",
+              "displayName": "Creation Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Content Summary",
+              "displayName": "Content Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tag",
+              "displayName": "Tag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Trend Type",
+              "displayName": "Trend Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Hook Idea",
+              "displayName": "Hook Idea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CTA",
+              "displayName": "CTA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Thumbnail Link",
+              "displayName": "Thumbnail Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "VV Link",
+              "displayName": "VV Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Instagram Content",
+              "displayName": "Instagram Content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Comments",
+              "displayName": "Comments",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1072,
+        576
+      ],
+      "id": "63a65060-e62d-48e3-beea-e0f3dbfd5284",
+      "name": "Append row in sheet1"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4",
+          "mode": "list",
+          "cachedResultName": "SocialMediaAutomation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1684144348,
+          "mode": "list",
+          "cachedResultName": "Instagram",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4/edit#gid=1684144348"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Creation Date": "={{ $('Discord6').item.json.timestamp }}",
+            "Content Summary": "={{ $('Discord').item.json.content }}"
+          },
+          "matchingColumns": [
+            "Creation Date"
+          ],
+          "schema": [
+            {
+              "id": "Creation Date",
+              "displayName": "Creation Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Content Summary",
+              "displayName": "Content Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Tag",
+              "displayName": "Tag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Trend Type",
+              "displayName": "Trend Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Hook Idea",
+              "displayName": "Hook Idea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "CTA",
+              "displayName": "CTA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Thumbnail Link",
+              "displayName": "Thumbnail Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "VV Link",
+              "displayName": "VV Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        1296,
+        576
+      ],
+      "id": "9be03e8e-25f2-4bfc-bdd6-207971f98f7c",
+      "name": "Append row in sheet2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=make Title , description out of it: {{ $json.content }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        720,
+        176
+      ],
+      "id": "7ae377f0-3033-4294-9aee-d9d6618a0f75",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        792,
+        400
+      ],
+      "id": "7e42f428-a40e-415f-b64b-7b8189735cb8",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4",
+          "mode": "list",
+          "cachedResultName": "SocialMediaAutomation",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1469868962,
+          "mode": "list",
+          "cachedResultName": "TikTok",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1SNfrw-6zRu9Saa83xnhMor6xz0UgsaTy0_uVVGsTaa4/edit#gid=1469868962"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Content Summary": "={{ $json.content }}",
+            "Creation Date": "={{ $json.timestamp }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Creation Date",
+              "displayName": "Creation Date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Content Summary",
+              "displayName": "Content Summary",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Title",
+              "displayName": "Title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Tag",
+              "displayName": "Tag",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Trend Type",
+              "displayName": "Trend Type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Hook Idea",
+              "displayName": "Hook Idea",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CTA",
+              "displayName": "CTA",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Thumbnail Link",
+              "displayName": "Thumbnail Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "VV Link",
+              "displayName": "VV Link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        784,
+        576
+      ],
+      "id": "546a274a-2449-4062-bb4a-9a0fdefbf9a7",
+      "name": "Append row in sheet"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "discord-update",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -1440,
+        256
+      ],
+      "id": "88374718-1c5e-4d78-af14-b9b02e0e1edb",
+      "name": "Webhook",
+      "webhookId": "c77cc538-0d91-4c69-96cf-25c02a488657",
+      "alwaysOutputData": false,
+      "executeOnce": false,
+      "retryOnFail": true,
+      "maxTries": 5,
+      "notesInFlow": true,
+      "onError": "continueRegularOutput",
+      "notes": "Webhook Discord !update Trigger"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 1
+            }
+          ]
+        }
+      },
+      "id": "b545ded0-52f7-4a1b-8f53-173eff3285b4",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        -976,
+        620
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.body.command }}",
+                    "rightValue": "update",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "8d71980b-0731-4c5e-9c92-107c66a5533c"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Update The Discord with Latest Content"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "loose",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "3bce5980-b886-4a99-9311-99c852f24ca8",
+                    "leftValue": "={{ $json.body.command }}",
+                    "rightValue": "description",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Description will updated soon!"
+            }
+          ]
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        -1152,
+        256
+      ],
+      "id": "15bb5da3-cf8a-45f2-bcf7-a83ba39f4a22",
+      "name": "Switch",
+      "retryOnFail": true,
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "content": "## Contact\nmaliklogix@gmail.com\nYoutube:youtube/@maliklogix"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1904,
+        528
+      ],
+      "id": "135b5994-1345-4ad7-963e-b349e55ea4c5",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Discord": {
+      "main": [
+        [
+          {
+            "node": "Discord1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord6": {
+      "main": [
+        [
+          {
+            "node": "Discord",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Markdown": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Discord6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser1": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Discord1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet1": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false
+  },
+  "versionId": "8ea399b6-7a36-4b35-98e1-c54183aac803",
+  "meta": {
+    "instanceId": "57e434e85ed6f53082745d4ed4aa68c2d0aa99fb0735a4903a88aa1c14246cb5"
+  },
+  "id": "lPhDfzQCMnFUnTlwY1Gcw",
+  "tags": []
+}
